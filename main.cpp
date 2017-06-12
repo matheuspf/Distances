@@ -1,15 +1,9 @@
 #include <bits/stdc++.h>
 
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-
-#define USING_OPENCV
-
 #include "Distances.h"
 
 
 using namespace std;
-using namespace cv;
 
 
 int main ()

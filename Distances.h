@@ -56,16 +56,6 @@ public:
     }
 
 
-#ifdef USING_OPENCV
-
-    template <typename T, typename U, int N>
-    inline auto operator () (const wrp::Wrapper<cv::Vec<T, N>>& v, const wrp::Wrapper<cv::Vec<U, N>>& u)
-    {
-        return this->operator()(&v[0], &v[N], &u[0]);
-    }
-
-#endif // USING_OPENCV
-
 
     template <typename Iter1, typename Iter2>
     inline auto operator () (Iter1 first1, Iter1 last1, Iter2 first2)
@@ -95,6 +85,18 @@ struct Euclidean
         auto diff = t - u;
 
         return diff * diff;
+    }
+};
+
+
+//---------------------------------------------------------------------------
+
+struct EuclideanSquared : public Euclidean
+{
+    template <typename T, typename U>
+    inline auto operator () (const T& t, const U& u)
+    {
+    	return std::sqrt(Euclidean::operator()(t, u));
     }
 };
 
@@ -174,6 +176,8 @@ struct ManhattanRGB : public LookUpDistance<unsigned int, 511>
 
 
 struct Euclidean : impl::Distances<impl::Euclidean> {};
+
+struct EuclideanSquared : impl::Distances<impl::EuclideanSquared> {};
 
 struct Manhattan : impl::Distances<impl::Manhattan> {};
 
